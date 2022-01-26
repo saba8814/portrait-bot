@@ -19,9 +19,9 @@ while True:
         img_name = datetime.now().strftime("%d-%m-%Y-%H%M%S")+".png"
         grey_img=cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         invert_img=cv2.bitwise_not(grey_img)
-        blur_img=cv2.GaussianBlur(invert_img, (105,105),0)
+        blur_img=cv2.GaussianBlur(invert_img,(145,145),0 )
         invblur_img=cv2.bitwise_not(blur_img)
-        sketch_img=cv2.divide(grey_img,invblur_img, scale=200)
+        sketch_img=cv2.divide(grey_img,invblur_img, scale=256.0)
         cv2.imwrite(img_name, sketch_img)
         print("{} written!".format(img_name))
 
