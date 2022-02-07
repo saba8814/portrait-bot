@@ -1,9 +1,10 @@
 import cv2
+import linedraw
 from datetime import datetime
 
 
 camera = cv2.VideoCapture(0)
-
+img_name =""
 if not camera.isOpened():
     raise IOError("Webcam not detected")
 
@@ -17,14 +18,12 @@ while True:
         break
     if c == 32:
         img_name = datetime.now().strftime("%d-%m-%Y-%H%M%S")+".png"
-        grey_img=cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        invert_img=cv2.bitwise_not(grey_img)
-        blur_img=cv2.GaussianBlur(invert_img,(145,145),0 )
-        invblur_img=cv2.bitwise_not(blur_img)
-        sketch_img=cv2.divide(grey_img,invblur_img, scale=256.0)
-        cv2.imwrite(img_name, sketch_img)
+        #resized_image = cv2.resize(frame, (512, 512)) 
+        cv2.imwrite(img_name, frame)
         print("{} written!".format(img_name))
 
+lines = linedraw.sketch(img_name)
+linedraw.visualize(lines) 
 camera.release()
 cv2.destroyAllWindows()
     
